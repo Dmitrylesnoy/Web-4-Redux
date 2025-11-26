@@ -1,0 +1,34 @@
+.table {
+  margin-top: 20px;
+}
+
+.tableData {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: white;
+  box-shadow: var(--shadow);
+}
+
+.tableData th {
+  background-color: var(--primary);
+  color: white;
+  padding: 12px;
+  text-align: left;
+}
+
+.tableData td {
+  padding: 10px;
+  border-bottom: 1px solid var(--light-purple);
+}
+
+.tableData tr:hover {
+  background-color: var(--light-bg);
+}
+
+.hitYes {
+  background-color: lightgreen;
+}
+
+.hitNo {
+  background-color: lightcoral;
+}

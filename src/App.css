@@ -1,3 +1,44 @@
+header h1,
+header h2 {
+  color: var(--primary);
+  text-align: center;
+  margin: 10px 0;
+}
+
+.main-container {
+  display: table;
+}
+
+.main-row {
+  display: table-row;
+}
+
+.card {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+  display: table-cell;
+  vertical-align: top;
+  padding: 20px;
+}
+
+#fox_picture {
+  vertical-align: middle;
+  margin: 50px 50px;
+}
+
+#custom-bar {
+  vertical-align: middle;
+  animation: spin 1s linear infinite;
+  display: none;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 .App {
   text-align: center;
 }

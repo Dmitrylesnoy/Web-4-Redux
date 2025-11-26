@@ -1,0 +1,107 @@
+.formCoords div {
+  margin-bottom: 15px;
+}
+
+.formCoords label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: var(--secondary);
+}
+
+.formCoords input,
+.formCoords select {
+  border: 2px solid var(--light-purple);
+  border-radius: var(--border-radius);
+  height: 50px;
+  box-sizing: border-box;
+}
+
+.formCoords input[type="text"],
+.formCoords select {
+  padding: 8px;
+  width: 200px;
+}
+
+.uiButton {
+  background-color: var(--primary) !important;
+  color: white !important;
+  padding: 10px 10px !important;
+  border: none;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  font-weight: bold !important;
+  font-size: inherit !important;
+  height: 60px !important;
+  min-width: 60px;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.uiButton:hover {
+  background-color: var(--secondary) !important;
+}
+
+.submitButton,
+button {
+  background-color: var(--primary);
+  color: white;
+  padding: 10px 10px;
+  border: none;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  font-weight: bold;
+  font-size: inherit;
+  height: 60px;
+  min-width: 60px;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.submitButton:hover,
+button:hover {
+  background-color: var(--secondary);
+}
+
+.x label {
+  display: inline-block;
+  margin-right: 10px;
+  margin-bottom: 5px;
+  font-weight: normal;
+  vertical-align: middle;
+}
+
+.x input[type="radio"] {
+  vertical-align: middle;
+}
+
+.formCoords > div {
+  border-left: 3px solid var(--primary);
+  padding-left: 10px;
+}
+
+.requiredField::after {
+  content: " *";
+  color: #ff0000;
+}
+
+.inputGroup {
+  color: #4b0082;
+}
+
+.errorMessage {
+  color: red;
+  font-size: 14px;
+  margin-top: 5px;
+}
+
+.foxPicture {
+  vertical-align: middle;
+  margin: 50px 50px;
+}
+
+.customBar {
+  vertical-align: middle;
+  animation: spin 1s linear infinite;
+  display: none;
+}
