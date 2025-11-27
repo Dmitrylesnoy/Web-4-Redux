@@ -7,6 +7,8 @@ header h2 {
 
 .main-container {
   display: table;
+  border-collapse: separate;
+  border-spacing: 20px;
 }
 
 .main-row {

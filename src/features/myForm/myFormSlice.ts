@@ -66,7 +66,7 @@ export const myFormSlice = createSlice({
     resetForm: (state) => {
       return { ...initialState };
     },
-    submitForm: (state) => {},
+    submitForm: (state) => {}, // TODO code server fetching request\responce
   },
 });
 
