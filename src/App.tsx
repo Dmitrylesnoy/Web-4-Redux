@@ -1,9 +1,9 @@
 import React from "react";
 import logo from "./logo.svg";
-import { Counter } from "./features/counter/Counter";
 import "./App.css";
 import { MyForm } from "./features/myForm/MyForm";
 import { Graph } from "./features/graph/Graph";
+import { MyTable } from "./features/myTable/MyTable";
 import styles from "./App.css";
 
 function App() {
@@ -16,6 +16,9 @@ function App() {
       <div className="main-row">
         <MyForm />
         <Graph />
+      </div>
+      <div className="main-row">
+        <MyTable />
       </div>
     </div>
   );
