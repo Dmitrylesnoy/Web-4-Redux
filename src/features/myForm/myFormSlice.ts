@@ -38,8 +38,8 @@ export const myFormSlice = createSlice({
     validateX: (state) => {
       if (state.x === null) {
         state.xError = "X is required";
-      } else if (state.x < -4 || state.x > 4) {
-        state.xError = "X must be between -4 and 4";
+      } else if (state.x < -3 || state.x > 5) {
+        state.xError = "X must be between -3 and 5";
       } else {
         state.xError = "";
       }
@@ -48,8 +48,8 @@ export const myFormSlice = createSlice({
       const yNum = parseFloat(state.y);
       if (isNaN(yNum)) {
         state.yError = "Y must be a number";
-      } else if (yNum < -5 || yNum > 3) {
-        state.yError = "Y must be between -5 and 3";
+      } else if (yNum < -5 || yNum > 5) {
+        state.yError = "Y must be between -5 and 5";
       } else {
         state.yError = "";
       }
@@ -57,8 +57,8 @@ export const myFormSlice = createSlice({
     validateR: (state) => {
       if (state.r === null) {
         state.rError = "R is required";
-      } else if (state.r <= 0) {
-        state.rError = "R must be positive";
+      } else if (state.r < 0 || state.r > 5) {
+        state.rError = "R must be between 0 and 5";
       } else {
         state.rError = "";
       }

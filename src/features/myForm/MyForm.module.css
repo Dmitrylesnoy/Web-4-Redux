@@ -1,5 +1,6 @@
 .formCoords div {
   margin-bottom: 15px;
+  text-align: left;
 }
 
 .formCoords label {
@@ -44,6 +45,7 @@
 
 .submitButton,
 button {
+  margin: 5px;
   background-color: var(--primary);
   color: white;
   padding: 10px 10px;
@@ -63,7 +65,7 @@ button:hover {
   background-color: var(--secondary);
 }
 
-.x label {
+.radio label {
   display: inline-block;
   margin-right: 10px;
   margin-bottom: 5px;
@@ -71,7 +73,7 @@ button:hover {
   vertical-align: middle;
 }
 
-.x input[type="radio"] {
+.radio input[type="radio"] {
   vertical-align: middle;
 }
 

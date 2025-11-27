@@ -1,59 +1,74 @@
+import React, { FormEvent } from "react";
 import styles from "./MyForm.module.css";
+import { setX, setY, setR, validateX, validateY, validateR, resetForm, submitForm, selectMyForm } from "./myFormSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 export function MyForm() {
+  const dispatch = useDispatch();
+  const { x, y, r, xError, yError, rError } = useSelector(selectMyForm);
+
+  const handleSubmit = (e: FormEvent) => {
+    e.preventDefault();
+    dispatch(validateX());
+    dispatch(validateY());
+    dispatch(validateR());
+    if (!xError && !yError && !rError) {
+      dispatch(submitForm());
+    }
+  };
+
   return (
-    <div className={styles.card}>
-      <form id="formCoords">
+    <div className="card">
+      <form id="formCoords" className={styles.formCoords} onSubmit={handleSubmit}>
         <div className={styles.inputGroup}>
-          <label for="x" className={styles.requiredField}>
+          <label htmlFor="x" className={styles.requiredField}>
             X:
           </label>
-          <selectOneRadio id="x" value="#{point.x}" required="true" validator="#{validator.validatePointX}">
-            <f:selectItem itemValue="-4" itemLabel="-4" />
-            <f:selectItem itemValue="-3" itemLabel="-3" />
-            <f:selectItem itemValue="-2" itemLabel="-2" />
-            <f:selectItem itemValue="-1" itemLabel="-1" />
-            <f:selectItem itemValue="0" itemLabel="0" />
-            <f:selectItem itemValue="1" itemLabel="1" />
-            <f:selectItem itemValue="2" itemLabel="2" />
-            <f:selectItem itemValue="3" itemLabel="3" />
-            <f:selectItem itemValue="4" itemLabel="4" />
-          </selectOneRadio>
-          <message for="x" styleClass="error-message" />
+          <div className={styles.radio}>
+            {[-3, -2, -1, 0, 1, 2, 3, 4, 5].map((val) => (
+              <label key={val}>
+                <input type="radio" name="x" value={val} checked={x === val} onChange={() => dispatch(setX(val))} />
+                {val}
+              </label>
+            ))}
+          </div>
+          {xError && <div className={styles.errorMessage}>{xError}</div>}
         </div>
         <div className={styles.inputGroup}>
-          <label for="y" className={styles.requiredField}>
+          <label htmlFor="y" className={styles.requiredField}>
             Y:
           </label>
-          <inputText
+          <input
             id="y"
-            value="#{point.y}"
-            required="true"
-            validator="#{validator.validatePointY}"
-            maxlength="8"
-            placeholder="От -5 до 3"
+            type="text"
+            value={y}
+            onChange={(e) => dispatch(setY(e.target.value))}
+            maxLength={8}
+            placeholder="От -5 до 5"
+            required
           />
           <br />
-          <message for="y" styleClass="error-message" />
+          {yError && <div className={styles.errorMessage}>{yError}</div>}
         </div>
         <div id="r-group" className={styles.inputGroup}>
-          <label for="r" className={styles.requiredField}>
+          <label htmlFor="r" className={styles.requiredField}>
             R:
           </label>
-          <inputHidden id="r" value="#{Rbean.value}" validator="#{validator.validateR}" />
-          {/* <commandButton id="rButton" styleClass="ui-button" value="#{Rbean.value}">
-            <f:ajax execute="@this" listener="#{Rbean.updateValue}" render="r-group r rButton" />
-          </commandButton> */}
-          <br />
-          <message for="r" styleClass="error-message" />
+          <div className={styles.radio}>
+            {[-3, -2, -1, 0, 1, 2, 3, 4, 5].map((val) => (
+              <label key={val}>
+                <input type="radio" name="r" value={val} checked={r === val} onChange={() => dispatch(setR(val))} />
+                {val}
+              </label>
+            ))}
+          </div>
+          {rError && <div className={styles.errorMessage}>{rError}</div>}
         </div>
         <div>
-          {/* <commandButton id="submitBtn" styleClass="ui-button" value="Check" action="#{inputProcess.submitPoint}">
-            <f:ajax execute="@form" render="@form tableData" oncomplete="loadPointsData(); updateGraph();" />
-          </commandButton>
-          <commandButton id="resetBtn" styleClass="ui-button" value="Reset" action="#{Rbean.reset}" immediate="true">
-            <f:ajax execute="@this" render="@form" />
-          </commandButton> */}
+          <button type="submit">Check</button>
+          <button type="button" onClick={() => dispatch(resetForm())}>
+            Reset
+          </button>
         </div>
       </form>
     </div>

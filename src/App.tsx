@@ -3,15 +3,16 @@ import logo from "./logo.svg";
 import { Counter } from "./features/counter/Counter";
 import "./App.css";
 import { MyForm } from "./features/myForm/MyForm";
+import styles from "./App.css";
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
+      {/* <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
-        <Counter />
-        <MyForm />
-      </header>
+      </header> */}
+      {/* <Counter /> */}
+      <MyForm />
     </div>
   );
 }
