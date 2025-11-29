@@ -1,19 +1,44 @@
-import React, { ChangeEvent, ChangeEventHandler, FormEvent } from "react";
+import React, { ChangeEvent, FormEvent } from "react";
 import styles from "./MyForm.module.css";
-import { setX, setY, setR, validateX, validateY, validateR, resetForm, submitForm, selectMyForm } from "./myFormSlice";
-import { useDispatch, useSelector } from "react-redux";
+import {
+  setX,
+  setY,
+  setR,
+  validateX,
+  validateY,
+  validateR,
+  resetForm,
+  selectMyForm,
+  submitFormDataThunk,
+} from "./myFormSlice";
+import { addPointData } from "../myTable/myTableSlice";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
 
 export function MyForm() {
-  const dispatch = useDispatch();
-  const { x, y, r, xError, yError, rError } = useSelector(selectMyForm);
+  const dispatch = useAppDispatch();
+  const { x, y, r, xError, yError, rError } = useAppSelector(selectMyForm);
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     dispatch(validateX());
     dispatch(validateY());
     dispatch(validateR());
-    if (!xError && !yError && !rError) {
-      dispatch(submitForm());
+    if (!xError && !yError && !rError && x !== null && !isNaN(parseFloat(y)) && r !== null) {
+      dispatch(submitFormDataThunk({ x, y, r })).then((result: any) => {
+        if (result.type === "myForm/submitForm/fulfilled" && result.payload) {
+          const data = result.payload;
+          dispatch(
+            addPointData({
+              x: data.x,
+              y: data.y,
+              r: data.r,
+              hit: data.hit,
+              execTime: data.execTime,
+              dataFormatted: data.date,
+            })
+          );
+        }
+      });
     }
   };
 
