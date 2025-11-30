@@ -1,8 +1,10 @@
 import React, { useRef, useEffect } from "react";
 import { useSelector } from "react-redux";
+import { RootState } from "../../app/store";
 import { selectMyForm, submitFormDataThunk } from "../myForm/myFormSlice";
 import { useAppDispatch } from "../../app/hooks";
-import { addPointDataThunk } from "../myTable/myTableSlice";
+import { setTableData } from "../myTable/myTableSlice";
+import { PointData } from "./../myTable/myTableSlice";
 
 const CENTER_X = 250;
 const CENTER_Y = 250;
@@ -30,11 +32,18 @@ export function drawPoint(canvas: HTMLCanvasElement | null, x: number, y: number
 export function Graph() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const { r } = useSelector(selectMyForm);
+  const tableData = useSelector((state: RootState) => state.myTable.data);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    drawGraph(r);
-  }, [r]);
+    const canvas = canvasRef.current;
+    if (canvas && tableData.length > 0) {
+      drawGraph(r);
+      tableData.forEach((point: PointData) => {
+        drawPoint(canvas, point.x, point.y, point.hit);
+      });
+    }
+  }, [tableData, r]);
 
   const drawGraph = (R: number | null) => {
     const canvas = canvasRef.current;
@@ -157,19 +166,10 @@ export function Graph() {
     dispatch(submitFormDataThunk(graphData)).then((result: any) => {
       if (result.type === "myForm/submitForm/fulfilled" && result.payload) {
         const data = result.payload;
-        dispatch(
-          addPointDataThunk({
-            pointData: {
-              x: data.x,
-              y: data.y,
-              r: data.r,
-              hit: data.hit,
-              execTime: data.execTime,
-              dataFormatted: data.date,
-            },
-            canvas: canvas,
-          })
-        );
+        dispatch(setTableData(data));
+        data.forEach((point: PointData) => {
+          drawPoint(canvas, point.x, point.y, point.hit);
+        });
       }
     });
   };

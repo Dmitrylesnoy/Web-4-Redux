@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
-import { drawPoint } from "../graph/Graph";
+import { fetchPointsData } from "./myTableAPI";
 
 export interface PointData {
   x: number;
@@ -7,24 +7,21 @@ export interface PointData {
   r: number;
   hit: boolean;
   execTime: number;
-  dataFormatted: string;
+  date: string;
 }
 
 export interface MyTableState {
   data: PointData[];
+  error?: string;
 }
 
 const initialState: MyTableState = {
   data: [],
 };
 
-export const addPointDataThunk = createAsyncThunk(
-  "myTable/addPointDataThunk",
-  async ({ pointData, canvas }: { pointData: PointData; canvas: HTMLCanvasElement | null }, { dispatch }) => {
-    dispatch(addPointData(pointData));
-    drawPoint(canvas, pointData.x, pointData.y, pointData.hit);
-  }
-);
+export const fetchPointsDataThunk = createAsyncThunk("myTable/fetchPointsDataThunk", async () => {
+  return await fetchPointsData();
+});
 
 const myTableSlice = createSlice({
   name: "myTable",
@@ -33,14 +30,26 @@ const myTableSlice = createSlice({
     setTableData: (state, action: PayloadAction<PointData[]>) => {
       state.data = action.payload;
     },
-    addPointData: (state, action: PayloadAction<PointData>) => {
+    addTableData: (state, action: PayloadAction<PointData>) => {
       state.data.push(action.payload);
     },
     clearTableData: (state) => {
       state.data = [];
     },
   },
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchPointsDataThunk.fulfilled, (state, action) => {
+        if (action.payload.data) {
+          state.data = action.payload.data;
+        }
+        state.error = undefined;
+      })
+      .addCase(fetchPointsDataThunk.rejected, (state, action) => {
+        state.error = action.error.message || "Submission failed";
+      });
+  },
 });
 
-export const { setTableData, addPointData, clearTableData } = myTableSlice.actions;
+export const { setTableData, addTableData, clearTableData } = myTableSlice.actions;
 export default myTableSlice.reducer;

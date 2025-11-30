@@ -11,7 +11,7 @@ import {
   selectMyForm,
   submitFormDataThunk,
 } from "./myFormSlice";
-import { addPointData } from "../myTable/myTableSlice";
+import { setTableData } from "../myTable/myTableSlice";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 
 export function MyForm() {
@@ -27,16 +27,7 @@ export function MyForm() {
       dispatch(submitFormDataThunk({ x, y, r })).then((result: any) => {
         if (result.type === "myForm/submitForm/fulfilled" && result.payload) {
           const data = result.payload;
-          dispatch(
-            addPointData({
-              x: data.x,
-              y: data.y,
-              r: data.r,
-              hit: data.hit,
-              execTime: data.execTime,
-              dataFormatted: data.date,
-            })
-          );
+          dispatch(setTableData(data));
         }
       });
     }

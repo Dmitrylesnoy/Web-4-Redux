@@ -1,11 +1,21 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../app/store";
-import { PointData } from "./myTableSlice";
+import { fetchPointsDataThunk, PointData } from "./myTableSlice";
 import styles from "./MyTable.module.css";
+import { useAppDispatch } from "../../app/hooks";
 
 export function MyTable() {
   const tableData = useSelector((state: RootState) => state.myTable.data);
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(fetchPointsDataThunk());
+  }, [dispatch]);
+
+  if (tableData.length === 0) {
+    return <div>Loading data...</div>;
+  }
   return (
     <div className={styles.table}>
       <table className={styles.tableData}>
@@ -27,7 +37,7 @@ export function MyTable() {
               <td>{pointData.r}</td>
               <td>{pointData.hit ? "Yes" : "No"}</td>
               <td>{pointData.execTime} ns</td>
-              <td>{pointData.dataFormatted}</td>
+              <td>{pointData.date}</td>
             </tr>
           ))}
         </tbody>
