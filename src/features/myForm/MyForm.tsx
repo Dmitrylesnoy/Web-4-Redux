@@ -23,7 +23,7 @@ export function MyForm() {
     dispatch(validateX());
     dispatch(validateY());
     dispatch(validateR());
-    if (!xError && !yError && !rError && x !== null && !isNaN(parseFloat(y)) && r !== null) {
+    if (!xError && !yError && !rError && x !== null && y !== null && r !== null) {
       dispatch(submitFormDataThunk({ x, y, r })).then((result: any) => {
         if (result.type === "myForm/submitForm/fulfilled" && result.payload) {
           const data = result.payload;
@@ -47,7 +47,8 @@ export function MyForm() {
     dispatch(validateX());
   };
   const handleY = (e: ChangeEvent<HTMLInputElement>) => {
-    dispatch(setY(e.target.value));
+    const val = e.target.value === "" ? null : +e.target.value;
+    dispatch(setY(val));
     dispatch(validateY());
   };
   const handleR = (e: ChangeEvent<HTMLInputElement>) => {
@@ -76,7 +77,15 @@ export function MyForm() {
           <label htmlFor="y" className={styles.requiredField}>
             Y:
           </label>
-          <input id="y" type="text" value={y} onChange={handleY} maxLength={8} placeholder="От -5 до 5" required />
+          <input
+            id="y"
+            type="number"
+            value={y ?? ""}
+            onChange={handleY}
+            maxLength={8}
+            placeholder="От -5 до 5"
+            required
+          />
           <br />
           {yError && <div className={styles.errorMessage}>{yError}</div>}
         </div>

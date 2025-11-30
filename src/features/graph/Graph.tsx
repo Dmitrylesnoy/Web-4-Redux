@@ -1,10 +1,13 @@
 import React, { useRef, useEffect } from "react";
 import { useSelector } from "react-redux";
-import { selectMyForm } from "../myForm/myFormSlice";
+import { selectMyForm, submitFormDataThunk } from "../myForm/myFormSlice";
+import { useAppDispatch } from "../../app/hooks";
+import { addPointData } from "../myTable/myTableSlice";
 
 export function Graph() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const { r } = useSelector(selectMyForm);
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     drawGraph(r);
@@ -151,7 +154,29 @@ export function Graph() {
     const graphY = ((centerY - y) / scale).toFixed(4);
 
     // TODO sending request with grapth data
+    const graphData = {
+      x: +graphX,
+      y: +graphY,
+      r,
+      graphFlag: false,
+    };
+
     console.log(`Clicked at X: ${graphX}, Y: ${graphY}`);
+    dispatch(submitFormDataThunk(graphData)).then((result: any) => {
+      if (result.type === "myForm/submitForm/fulfilled" && result.payload) {
+        const data = result.payload;
+        dispatch(
+          addPointData({
+            x: data.x,
+            y: data.y,
+            r: data.r,
+            hit: data.hit,
+            execTime: data.execTime,
+            dataFormatted: data.date,
+          })
+        );
+      }
+    });
   };
 
   return (

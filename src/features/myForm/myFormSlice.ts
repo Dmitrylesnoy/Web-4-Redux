@@ -4,7 +4,7 @@ import { submitFormData, FormData, ServerResponse } from "./myFormAPI";
 
 export interface MyFormState {
   x: number | null;
-  y: string;
+  y: number | null;
   r: number | null;
   xError: string;
   yError: string;
@@ -14,7 +14,7 @@ export interface MyFormState {
 
 const initialState: MyFormState = {
   x: null,
-  y: "",
+  y: null,
   r: null,
   xError: "",
   yError: "",
@@ -30,7 +30,7 @@ export const myFormSlice = createSlice({
       state.x = action.payload;
       state.xError = "";
     },
-    setY: (state, action: PayloadAction<string>) => {
+    setY: (state, action: PayloadAction<number | null>) => {
       state.y = action.payload;
       state.yError = "";
     },
@@ -48,10 +48,9 @@ export const myFormSlice = createSlice({
       }
     },
     validateY: (state) => {
-      const yNum = parseFloat(state.y);
-      if (isNaN(yNum)) {
-        state.yError = "Y must be a number";
-      } else if (yNum < -5 || yNum > 5) {
+      if (state.y === null) {
+        state.yError = "Y is required, must be a number";
+      } else if (state.y < -5 || state.y > 5) {
         state.yError = "Y must be between -5 and 5";
       } else {
         state.yError = "";
@@ -92,18 +91,6 @@ export const selectMyForm = (state: RootState) => state.myForm;
 
 export default myFormSlice.reducer;
 
-export const submitFormDataThunk = createAsyncThunk(
-  "myForm/submitForm",
-  async (payload: { x: number; y: string; r: number }) => {
-    const { x, y, r } = payload;
-
-    const formData: FormData = {
-      x,
-      y: parseFloat(y),
-      r,
-      graphFlag: false,
-    };
-
-    return await submitFormData(formData);
-  }
-);
+export const submitFormDataThunk = createAsyncThunk("myForm/submitForm", async (formData: FormData) => {
+  return await submitFormData(formData, formData.graphFlag || false);
+});

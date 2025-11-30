@@ -15,7 +15,7 @@ export interface ServerResponse {
   error?: string;
 }
 
-export const submitFormData = async (formData: FormData): Promise<ServerResponse> => {
+export const submitFormData = async (formData: FormData, graphFlag: boolean): Promise<ServerResponse> => {
   try {
     const response = await fetch("api/form", {
       method: "POST",
@@ -26,7 +26,7 @@ export const submitFormData = async (formData: FormData): Promise<ServerResponse
         x: formData.x,
         y: formData.y,
         r: formData.r,
-        graph: "false",
+        graph: graphFlag,
       }),
     });
 
