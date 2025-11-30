@@ -1,4 +1,5 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
+import { drawPoint } from "../graph/Graph";
 
 export interface PointData {
   x: number;
@@ -16,6 +17,14 @@ export interface MyTableState {
 const initialState: MyTableState = {
   data: [],
 };
+
+export const addPointDataThunk = createAsyncThunk(
+  "myTable/addPointDataThunk",
+  async ({ pointData, canvas }: { pointData: PointData; canvas: HTMLCanvasElement | null }, { dispatch }) => {
+    dispatch(addPointData(pointData));
+    drawPoint(canvas, pointData.x, pointData.y, pointData.hit);
+  }
+);
 
 const myTableSlice = createSlice({
   name: "myTable",

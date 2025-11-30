@@ -2,7 +2,30 @@ import React, { useRef, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { selectMyForm, submitFormDataThunk } from "../myForm/myFormSlice";
 import { useAppDispatch } from "../../app/hooks";
-import { addPointData } from "../myTable/myTableSlice";
+import { addPointDataThunk } from "../myTable/myTableSlice";
+
+const CENTER_X = 250;
+const CENTER_Y = 250;
+const SCALE = 40;
+
+export function drawPoint(canvas: HTMLCanvasElement | null, x: number, y: number, hit: boolean) {
+  if (!canvas) return;
+
+  const ctx = canvas.getContext("2d");
+  if (!ctx) return;
+
+  const posX = CENTER_X + x * SCALE;
+  const posY = CENTER_Y - y * SCALE;
+
+  ctx.fillStyle = hit ? "lime" : "lightcoral";
+  ctx.strokeStyle = hit ? "green" : "red";
+  ctx.lineWidth = 1;
+
+  ctx.beginPath();
+  ctx.arc(posX, posY, 3, 0, 2 * Math.PI);
+  ctx.fill();
+  ctx.stroke();
+}
 
 export function Graph() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -22,9 +45,6 @@ export function Graph() {
 
     const width = 500;
     const height = 500;
-    const centerX = 250;
-    const centerY = 250;
-    const scale = 40;
 
     canvas.width = width;
     canvas.height = height;
@@ -38,22 +58,22 @@ export function Graph() {
 
     // Draw axes
     ctx.beginPath();
-    ctx.moveTo(50, centerY);
-    ctx.lineTo(450, centerY);
-    ctx.moveTo(centerX, 450);
-    ctx.lineTo(centerX, 50);
+    ctx.moveTo(50, CENTER_Y);
+    ctx.lineTo(450, CENTER_Y);
+    ctx.moveTo(CENTER_X, 450);
+    ctx.lineTo(CENTER_X, 50);
     ctx.stroke();
 
     // Draw X ticks
     const xTicks = [-5, -4, -3, -2, -1, 1, 2, 3, 4, 5];
     xTicks.forEach((x) => {
-      const posX = centerX + x * scale;
+      const posX = CENTER_X + x * SCALE;
       if (posX >= 0 && posX <= width) {
         ctx.beginPath();
-        ctx.moveTo(posX, centerY - 5);
-        ctx.lineTo(posX, centerY + 5);
+        ctx.moveTo(posX, CENTER_Y - 5);
+        ctx.lineTo(posX, CENTER_Y + 5);
         ctx.stroke();
-        ctx.fillText(x.toString(), posX, centerY + 20);
+        ctx.fillText(x.toString(), posX, CENTER_Y + 20);
       }
     });
 
@@ -61,76 +81,52 @@ export function Graph() {
     const yTicks = [-5, -4, -3, -2, -1, 1, 2, 3, 4, 5];
     ctx.textAlign = "start";
     yTicks.forEach((y) => {
-      const posY = centerY - y * scale;
+      const posY = CENTER_Y - y * SCALE;
       if (posY >= 0 && posY <= height) {
         ctx.beginPath();
-        ctx.moveTo(centerX - 5, posY);
-        ctx.lineTo(centerX + 5, posY);
+        ctx.moveTo(CENTER_X - 5, posY);
+        ctx.lineTo(CENTER_X + 5, posY);
         ctx.stroke();
-        ctx.fillText(y.toString(), centerX + 10, posY + 5);
+        ctx.fillText(y.toString(), CENTER_X + 10, posY + 5);
       }
     });
 
     // Draw axis labels
     ctx.font = "12px sans-serif";
-    ctx.fillText("X", 440, centerY - 10);
-    ctx.fillText("Y", centerX + 10, 40);
+    ctx.fillText("X", 440, CENTER_Y - 10);
+    ctx.fillText("Y", CENTER_X + 10, 40);
 
     if (R && R > 0) {
-      const radiusPx = R * scale;
+      const radiusPx = R * SCALE;
       ctx.fillStyle = "rgba(138,43,226,0.3)";
       ctx.strokeStyle = "#8a2be2";
       ctx.lineWidth = 2;
 
       // Draw circle sector
       ctx.beginPath();
-      ctx.arc(centerX, centerY, radiusPx / 2, Math.PI / 2, Math.PI, false);
-      ctx.lineTo(centerX, centerY);
+      ctx.arc(CENTER_X, CENTER_Y, radiusPx / 2, Math.PI / 2, Math.PI, false);
+      ctx.lineTo(CENTER_X, CENTER_Y);
       ctx.closePath();
       ctx.fill();
       ctx.stroke();
 
       // Draw triangle
       ctx.beginPath();
-      ctx.moveTo(centerX, centerY);
-      ctx.lineTo(centerX - radiusPx, centerY);
-      ctx.lineTo(centerX, centerY - radiusPx);
+      ctx.moveTo(CENTER_X, CENTER_Y);
+      ctx.lineTo(CENTER_X - radiusPx, CENTER_Y);
+      ctx.lineTo(CENTER_X, CENTER_Y - radiusPx);
       ctx.closePath();
       ctx.fill();
       ctx.stroke();
 
       // Draw rectangle
-      const rectX = centerX;
-      const rectY = centerY - radiusPx / 2;
+      const rectX = CENTER_X;
+      const rectY = CENTER_Y - radiusPx / 2;
       const rectWidth = radiusPx;
-      const rectHeight = (R / 2) * scale;
+      const rectHeight = (R / 2) * SCALE;
       ctx.fillRect(rectX, rectY, rectWidth, rectHeight);
       ctx.strokeRect(rectX, rectY, rectWidth, rectHeight);
     }
-  };
-
-  const drawPoint = (x: number, y: number, hit: boolean) => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
-
-    const centerX = 250;
-    const centerY = 250;
-    const scale = 40;
-
-    const posX = centerX + x * scale;
-    const posY = centerY - y * scale;
-
-    ctx.fillStyle = hit ? "lime" : "lightcoral";
-    ctx.strokeStyle = hit ? "green" : "red";
-    ctx.lineWidth = 1;
-
-    ctx.beginPath();
-    ctx.arc(posX, posY, 3, 0, 2 * Math.PI);
-    ctx.fill();
-    ctx.stroke();
   };
 
   const handleCanvasClick = (event: React.MouseEvent<HTMLCanvasElement>) => {
@@ -146,19 +142,15 @@ export function Graph() {
     const x = event.clientX - rect.left;
     const y = event.clientY - rect.top;
 
-    const centerX = 250;
-    const centerY = 250;
-    const scale = 40;
-
-    const graphX = ((x - centerX) / scale).toFixed(4);
-    const graphY = ((centerY - y) / scale).toFixed(4);
+    const graphX = ((x - CENTER_X) / SCALE).toFixed(4);
+    const graphY = ((CENTER_Y - y) / SCALE).toFixed(4);
 
     // TODO sending request with grapth data
     const graphData = {
       x: +graphX,
       y: +graphY,
       r,
-      graphFlag: false,
+      graphFlag: true,
     };
 
     console.log(`Clicked at X: ${graphX}, Y: ${graphY}`);
@@ -166,13 +158,16 @@ export function Graph() {
       if (result.type === "myForm/submitForm/fulfilled" && result.payload) {
         const data = result.payload;
         dispatch(
-          addPointData({
-            x: data.x,
-            y: data.y,
-            r: data.r,
-            hit: data.hit,
-            execTime: data.execTime,
-            dataFormatted: data.date,
+          addPointDataThunk({
+            pointData: {
+              x: data.x,
+              y: data.y,
+              r: data.r,
+              hit: data.hit,
+              execTime: data.execTime,
+              dataFormatted: data.date,
+            },
+            canvas: canvas,
           })
         );
       }

@@ -22,6 +22,10 @@ const initialState: MyFormState = {
   submitResult: null,
 };
 
+export const submitFormDataThunk = createAsyncThunk("myForm/submitForm", async (formData: FormData) => {
+  return await submitFormData(formData, formData.graphFlag || false);
+});
+
 export const myFormSlice = createSlice({
   name: "myForm",
   initialState,
@@ -90,7 +94,3 @@ export const { setX, setY, setR, validateX, validateY, validateR, resetForm } = 
 export const selectMyForm = (state: RootState) => state.myForm;
 
 export default myFormSlice.reducer;
-
-export const submitFormDataThunk = createAsyncThunk("myForm/submitForm", async (formData: FormData) => {
-  return await submitFormData(formData, formData.graphFlag || false);
-});
