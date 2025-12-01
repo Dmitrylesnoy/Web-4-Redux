@@ -1,26 +1,16 @@
 import React from "react";
-import logo from "./logo.svg";
+import { Routes, Route } from "react-router-dom";
+import { LoginPage } from "./features/loginPage/LoginPage";
+import { MainPage } from "./features/mainPage/MainPage";
 import "./App.css";
-import { MyForm } from "./features/myForm/MyForm";
-import { Graph } from "./features/graph/Graph";
-import { MyTable } from "./features/myTable/MyTable";
-import styles from "./App.css";
 
 function App() {
   return (
-    <div className="main-container">
-      {/* <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-      </header> */}
-      {/* <Counter /> */}
-      <div className="main-row">
-        <MyForm />
-        <Graph />
-      </div>
-      <div className="main-row">
-        <MyTable />
-      </div>
-    </div>
+    <Routes>
+      <Route path="/" element={<LoginPage />} />
+      <Route path="*" element={<LoginPage />} />
+      <Route path="/main" element={<MainPage />} />
+    </Routes>
   );
 }
 

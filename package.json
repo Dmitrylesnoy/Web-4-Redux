@@ -2,19 +2,24 @@
   "name": "my-app",
   "version": "0.1.0",
   "private": true,
+  "homepage": "./",
   "dependencies": {
     "@reduxjs/toolkit": "^2.11.0",
     "cra-template-redux-typescript": "2.0.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "react-redux": "^9.2.0",
-    "react-scripts": "5.0.1"
+    "react-router-dom": "^7.10.0",
+    "react-scripts": "5.0.1",
+    "redux-saga": "^1.4.2"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "build-and-copy": "npm run build && npm run copy-to-backend",
+    "copy-to-backend": "xcopy /E /I /Y build \"..\\Web-4-jakarta\\src\\main\\webapp\""
   },
   "eslintConfig": {
     "extends": [

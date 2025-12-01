@@ -1,5 +1,4 @@
-import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
-import { fetchPointsData } from "./myTableAPI";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export interface PointData {
   x: number;
@@ -19,10 +18,6 @@ const initialState: MyTableState = {
   data: [],
 };
 
-export const fetchPointsDataThunk = createAsyncThunk("myTable/fetchPointsDataThunk", async () => {
-  return await fetchPointsData();
-});
-
 const myTableSlice = createSlice({
   name: "myTable",
   initialState,
@@ -36,20 +31,24 @@ const myTableSlice = createSlice({
     clearTableData: (state) => {
       state.data = [];
     },
-  },
-  extraReducers: (builder) => {
-    builder
-      .addCase(fetchPointsDataThunk.fulfilled, (state, action) => {
-        if (action.payload.data) {
-          state.data = action.payload.data;
-        }
-        state.error = undefined;
-      })
-      .addCase(fetchPointsDataThunk.rejected, (state, action) => {
-        state.error = action.error.message || "Submission failed";
-      });
+    fetchTableDataRequest: (state) => {
+      state.error = undefined;
+    },
+    fetchTableDataSuccess: (state, action: PayloadAction<PointData[]>) => {
+      state.data = action.payload;
+    },
+    fetchTableDataFailure: (state, action: PayloadAction<string>) => {
+      state.error = action.payload;
+    },
   },
 });
 
-export const { setTableData, addTableData, clearTableData } = myTableSlice.actions;
+export const {
+  setTableData,
+  addTableData,
+  clearTableData,
+  fetchTableDataRequest,
+  fetchTableDataSuccess,
+  fetchTableDataFailure,
+} = myTableSlice.actions;
 export default myTableSlice.reducer;

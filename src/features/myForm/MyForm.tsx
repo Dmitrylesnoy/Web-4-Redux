@@ -9,10 +9,10 @@ import {
   validateR,
   resetForm,
   selectMyForm,
-  submitFormDataThunk,
+  submitFormRequest,
 } from "./myFormSlice";
-import { setTableData } from "../myTable/myTableSlice";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import { fetchTableDataRequest } from "../myTable/myTableSlice";
 
 export function MyForm() {
   const dispatch = useAppDispatch();
@@ -24,12 +24,8 @@ export function MyForm() {
     dispatch(validateY());
     dispatch(validateR());
     if (!xError && !yError && !rError && x !== null && y !== null && r !== null) {
-      dispatch(submitFormDataThunk({ x, y, r })).then((result: any) => {
-        if (result.type === "myForm/submitForm/fulfilled" && result.payload) {
-          const data = result.payload;
-          dispatch(setTableData(data));
-        }
-      });
+      dispatch(submitFormRequest({ x, y, r, graphFlag: false }));
+      dispatch(fetchTableDataRequest());
     }
   };
 

@@ -1,6 +1,6 @@
-import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../../app/store";
-import { submitFormData, FormData, ServerResponse } from "./myFormAPI";
+import { FormData, ServerResponse } from "./myFormAPI";
 
 export interface MyFormState {
   x: number | null;
@@ -9,7 +9,6 @@ export interface MyFormState {
   xError: string;
   yError: string;
   rError: string;
-  submitResult: ServerResponse | null;
 }
 
 const initialState: MyFormState = {
@@ -19,12 +18,7 @@ const initialState: MyFormState = {
   xError: "",
   yError: "",
   rError: "",
-  submitResult: null,
 };
-
-export const submitFormDataThunk = createAsyncThunk("myForm/submitForm", async (formData: FormData) => {
-  return await submitFormData(formData, formData.graphFlag || false);
-});
 
 export const myFormSlice = createSlice({
   name: "myForm",
@@ -72,24 +66,24 @@ export const myFormSlice = createSlice({
     resetForm: (state) => {
       return { ...initialState };
     },
-  },
-  extraReducers: (builder) => {
-    builder
-      .addCase(submitFormDataThunk.pending, (state) => {
-        state.submitResult = null;
-      })
-      .addCase(submitFormDataThunk.fulfilled, (state, action) => {
-        state.submitResult = action.payload;
-      })
-      .addCase(submitFormDataThunk.rejected, (state, action) => {
-        state.submitResult = {
-          error: action.error.message || "Submission failed",
-        };
-      });
+    submitFormRequest: (state, action: PayloadAction<FormData>) => {},
+    submitFormSuccess: (state, action: PayloadAction<ServerResponse>) => {},
+    submitFormFailure: (state, action: PayloadAction<string>) => {},
   },
 });
 
-export const { setX, setY, setR, validateX, validateY, validateR, resetForm } = myFormSlice.actions;
+export const {
+  setX,
+  setY,
+  setR,
+  validateX,
+  validateY,
+  validateR,
+  resetForm,
+  submitFormRequest,
+  submitFormSuccess,
+  submitFormFailure,
+} = myFormSlice.actions;
 
 export const selectMyForm = (state: RootState) => state.myForm;
 

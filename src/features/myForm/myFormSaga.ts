@@ -1,0 +1,26 @@
+import { call, put, takeLatest } from "redux-saga/effects";
+import { submitFormData } from "./myFormAPI";
+import { submitFormRequest, submitFormSuccess, submitFormFailure } from "./myFormSlice";
+import { fetchTableData } from "../myTable/myTableAPI";
+import { setTableData } from "../myTable/myTableSlice";
+
+function* submitFormSaga(action: ReturnType<typeof submitFormRequest>): Generator<any, void, any> {
+  try {
+    const response: any = yield call(submitFormData, action.payload, action.payload.graphFlag || false);
+    if (response.error) {
+      yield put(submitFormFailure(response.error));
+    } else {
+      yield put(submitFormSuccess(response));
+      const tableResponse = yield call(fetchTableData);
+      if (tableResponse.data) {
+        yield put(setTableData(tableResponse.data));
+      }
+    }
+  } catch (error) {
+    yield put(submitFormFailure(error instanceof Error ? error.message : "Unknown error"));
+  }
+}
+
+export function* watcherSubmitForm() {
+  yield takeLatest(submitFormRequest.type, submitFormSaga);
+}

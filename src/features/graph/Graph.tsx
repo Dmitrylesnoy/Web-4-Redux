@@ -1,9 +1,8 @@
 import React, { useRef, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../app/store";
-import { selectMyForm, submitFormDataThunk } from "../myForm/myFormSlice";
+import { selectMyForm, submitFormRequest } from "../myForm/myFormSlice";
 import { useAppDispatch } from "../../app/hooks";
-import { setTableData } from "../myTable/myTableSlice";
 import { PointData } from "./../myTable/myTableSlice";
 
 const CENTER_X = 250;
@@ -110,7 +109,7 @@ export function Graph() {
       ctx.fillStyle = "rgba(138,43,226,0.3)";
       ctx.strokeStyle = "#8a2be2";
       ctx.lineWidth = 2;
-
+      // TODO: new graph
       // Draw circle sector
       ctx.beginPath();
       ctx.arc(CENTER_X, CENTER_Y, radiusPx / 2, Math.PI / 2, Math.PI, false);
@@ -163,15 +162,7 @@ export function Graph() {
     };
 
     console.log(`Clicked at X: ${graphX}, Y: ${graphY}`);
-    dispatch(submitFormDataThunk(graphData)).then((result: any) => {
-      if (result.type === "myForm/submitForm/fulfilled" && result.payload) {
-        const data = result.payload;
-        dispatch(setTableData(data));
-        data.forEach((point: PointData) => {
-          drawPoint(canvas, point.x, point.y, point.hit);
-        });
-      }
-    });
+    dispatch(submitFormRequest(graphData));
   };
 
   return (

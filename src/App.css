@@ -5,14 +5,21 @@ header h2 {
   margin: 10px 0;
 }
 
-.main-container {
-  display: table;
-  border-collapse: separate;
-  border-spacing: 20px;
+.main-header {
+  background-color: white;
+  padding: 20px;
+  text-align: center;
+  box-shadow: var(--shadow);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
 }
 
-.main-row {
-  display: table-row;
+.main-header h1 {
+  color: var(--primary);
+  margin: 0;
+  flex: 1;
 }
 
 .card {
@@ -25,15 +32,47 @@ header h2 {
   padding: 20px;
 }
 
-#fox_picture {
+.submitButton,
+button {
+  margin: 5px;
+  background-color: var(--primary);
+  color: white;
+  padding: 10px 10px;
+  border: none;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  font-weight: bold;
+  font-size: inherit;
+  height: 60px;
+  min-width: 60px;
+  display: inline-block;
   vertical-align: middle;
-  margin: 50px 50px;
+}
+
+.submitButton:hover,
+button:hover {
+  background-color: var(--secondary);
+}
+
+.main-container {
+  display: table;
+  border-collapse: separate;
+  border-spacing: 20px;
+}
+
+.main-row {
+  display: table-row;
 }
 
 #custom-bar {
   vertical-align: middle;
   animation: spin 1s linear infinite;
   display: none;
+}
+
+#fox_picture {
+  vertical-align: middle;
+  margin: 50px 50px;
 }
 
 @keyframes spin {

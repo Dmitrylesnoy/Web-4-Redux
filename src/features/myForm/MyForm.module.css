@@ -24,47 +24,6 @@
   width: 200px;
 }
 
-.uiButton {
-  background-color: var(--primary) !important;
-  color: white !important;
-  padding: 10px 10px !important;
-  border: none;
-  border-radius: var(--border-radius);
-  cursor: pointer;
-  font-weight: bold !important;
-  font-size: inherit !important;
-  height: 60px !important;
-  min-width: 60px;
-  display: inline-block;
-  vertical-align: middle;
-}
-
-.uiButton:hover {
-  background-color: var(--secondary) !important;
-}
-
-.submitButton,
-button {
-  margin: 5px;
-  background-color: var(--primary);
-  color: white;
-  padding: 10px 10px;
-  border: none;
-  border-radius: var(--border-radius);
-  cursor: pointer;
-  font-weight: bold;
-  font-size: inherit;
-  height: 60px;
-  min-width: 60px;
-  display: inline-block;
-  vertical-align: middle;
-}
-
-.submitButton:hover,
-button:hover {
-  background-color: var(--secondary);
-}
-
 .radio label {
   display: inline-block;
   margin-right: 10px;

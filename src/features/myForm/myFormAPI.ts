@@ -1,3 +1,5 @@
+import { PointData } from "../myTable/myTableSlice";
+
 export interface FormData {
   x: number;
   y: number;
@@ -6,12 +8,7 @@ export interface FormData {
 }
 
 export interface ServerResponse {
-  x?: number;
-  y?: number;
-  r?: number;
-  hit?: boolean;
-  execTime?: number;
-  date?: string;
+  data?: PointData[];
   error?: string;
 }
 
@@ -38,7 +35,7 @@ export const submitFormData = async (formData: FormData, graphFlag: boolean): Pr
     }
 
     const data = await response.json();
-    return data;
+    return { data: data };
   } catch (error) {
     console.error("Error submitting form:", error);
     return {

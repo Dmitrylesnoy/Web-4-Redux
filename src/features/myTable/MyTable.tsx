@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../app/store";
-import { fetchPointsDataThunk, PointData } from "./myTableSlice";
+import { fetchTableDataRequest, PointData } from "./myTableSlice";
 import styles from "./MyTable.module.css";
 import { useAppDispatch } from "../../app/hooks";
 
@@ -10,7 +10,7 @@ export function MyTable() {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(fetchPointsDataThunk());
+    dispatch(fetchTableDataRequest());
   }, [dispatch]);
 
   if (tableData.length === 0) {
