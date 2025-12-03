@@ -16,7 +16,8 @@ header h2 {
   margin-bottom: 20px;
 }
 
-.main-header h1 {
+.main-header h1,
+.main-header h2 {
   color: var(--primary);
   margin: 0;
   flex: 1;

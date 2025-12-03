@@ -15,7 +15,8 @@ export function MainPage() {
   return (
     <div>
       <header className="main-header">
-        <h1>Web Lab 4</h1>
+        <h1>Web Lab 4 - вариант 300000</h1>
+        <h2>Линейский Аким Евгеньевич, группа P3215</h2>
         <button onClick={handleNavigateToLogin}>Logout</button>
       </header>
 

@@ -80,3 +80,23 @@ input:focus {
     transform: rotate(360deg);
   }
 }
+
+.loginButton {
+  margin: 5px;
+  background-color: var(--primary);
+  color: white;
+  padding: 10px 10px;
+  border: none;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  font-weight: bold;
+  font-size: inherit;
+  height: 60px;
+  min-width: 60px;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.loginButton:hover {
+  background-color: var(--secondary);
+}
