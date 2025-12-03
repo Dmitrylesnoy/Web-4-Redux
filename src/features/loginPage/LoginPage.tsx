@@ -11,7 +11,6 @@ export function LoginPage() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (username.trim() && password.trim()) {
-      // Here you would typically validate credentials
       navigate("/main");
     }
   };
