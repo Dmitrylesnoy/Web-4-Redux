@@ -112,7 +112,7 @@ export function Graph() {
       // TODO: new graph
       // Draw circle sector
       ctx.beginPath();
-      ctx.arc(CENTER_X, CENTER_Y, radiusPx / 2, Math.PI / 2, Math.PI, false);
+      ctx.arc(CENTER_X, CENTER_Y, radiusPx, -Math.PI, -Math.PI / 2, false);
       ctx.lineTo(CENTER_X, CENTER_Y);
       ctx.closePath();
       ctx.fill();
@@ -122,16 +122,16 @@ export function Graph() {
       ctx.beginPath();
       ctx.moveTo(CENTER_X, CENTER_Y);
       ctx.lineTo(CENTER_X - radiusPx, CENTER_Y);
-      ctx.lineTo(CENTER_X, CENTER_Y - radiusPx);
+      ctx.lineTo(CENTER_X, CENTER_Y + radiusPx / 2);
       ctx.closePath();
       ctx.fill();
       ctx.stroke();
 
       // Draw rectangle
       const rectX = CENTER_X;
-      const rectY = CENTER_Y - radiusPx / 2;
+      const rectY = CENTER_Y;
       const rectWidth = radiusPx;
-      const rectHeight = (R / 2) * SCALE;
+      const rectHeight = radiusPx;
       ctx.fillRect(rectX, rectY, rectWidth, rectHeight);
       ctx.strokeRect(rectX, rectY, rectWidth, rectHeight);
     }
