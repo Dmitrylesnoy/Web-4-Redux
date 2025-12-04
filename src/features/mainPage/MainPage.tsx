@@ -6,6 +6,7 @@ import { Graph } from "../graph/Graph";
 import { MyTable } from "../myTable/MyTable";
 import { RootState, AppDispatch } from "../../app/store";
 import { logoutRequest } from "../auth/authSlice";
+import styles from "./MainPage.module.css";
 
 export function MainPage() {
   // TODO: resize front
@@ -15,7 +16,7 @@ export function MainPage() {
 
   useEffect(() => {
     if (!isAuthenticated) {
-      navigate("/");
+      navigate("app/login");
     }
   }, [isAuthenticated, navigate]);
 
@@ -23,18 +24,20 @@ export function MainPage() {
     if (token) {
       dispatch(logoutRequest(token));
     }
-    navigate("/");
+    navigate("app/login");
   };
 
   return (
     <div>
-      <header className="main-header">
-        <div className="header-info">
+      <header className={styles.mainHeader}>
+        <div className={styles.headerInfo}>
           <h1>Web Lab 4 - вариант 300000</h1>
           <h2>Линейский Аким Евгеньевич, группа P3215</h2>
-          {username && <h3>Welcome, {username}!</h3>}
         </div>
-        <button onClick={handleLogout}>Logout</button>
+        <div className={styles.controls}>
+          <h3>Welcome, {username}!</h3>
+          <button onClick={handleLogout}>Logout</button>
+        </div>
       </header>
 
       <div className="main-container">

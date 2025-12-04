@@ -5,10 +5,10 @@ import { loginRequest, loginSuccess, loginFailure, logoutRequest, logoutSuccess,
 function* loginSaga(action: ReturnType<typeof loginRequest>): Generator<any, void, any> {
   try {
     const response = yield call(login, action.payload);
-    if (response.result === "true" && response.token) {
+    if (response.token) {
       yield put(loginSuccess({ username: action.payload.username, token: response.token }));
     } else {
-      yield put(loginFailure(response.error || "Login failed"));
+      yield put(loginFailure(response.result || "Login failed"));
     }
   } catch (error) {
     yield put(loginFailure(error instanceof Error ? error.message : "Unknown error"));

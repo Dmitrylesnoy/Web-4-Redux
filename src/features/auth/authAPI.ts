@@ -10,17 +10,16 @@ export interface LogoutRequest {
   token: string;
 }
 
-export interface AuthApiResponse {
+export interface AuthResponse {
   result: string;
   token: string;
-  error?: string;
 }
 
-export const login = async (credentials: AuthCredentials): Promise<AuthApiResponse> => {
+export const login = async (credentials: AuthCredentials): Promise<AuthResponse> => {
   try {
     const hashedPassword = CryptoJS.MD5(credentials.password).toString();
 
-    const response = await fetch("app/user/login", {
+    const response = await fetch("api/user/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -34,9 +33,8 @@ export const login = async (credentials: AuthCredentials): Promise<AuthApiRespon
     if (!response.ok) {
       const errorData = await response.json();
       return {
-        result: "false",
+        result: errorData.result || `HTTP error! status: ${response.status}`,
         token: "",
-        error: errorData.error || `HTTP error! status: ${response.status}`,
       };
     }
 
@@ -44,21 +42,19 @@ export const login = async (credentials: AuthCredentials): Promise<AuthApiRespon
     return {
       result: data.result,
       token: data.token,
-      error: data.error,
     };
   } catch (error) {
     console.error("Error during login:", error);
     return {
-      result: "false",
+      result: error instanceof Error ? error.message : "Unknown error occurred",
       token: "",
-      error: error instanceof Error ? error.message : "Unknown error occurred",
     };
   }
 };
 
-export const logout = async (token: string): Promise<{ success: boolean; error?: string }> => {
+export const logout = async (token: string): Promise<{ result?: string; success: boolean }> => {
   try {
-    const response = await fetch("app/user/logout", {
+    const response = await fetch("api/user/logout", {
       method: "GET",
       headers: {
         AuthToken: `${token}`,
@@ -68,8 +64,8 @@ export const logout = async (token: string): Promise<{ success: boolean; error?:
     if (!response.ok) {
       const errorData = await response.json();
       return {
+        result: errorData.result || `HTTP error! status: ${response.status}`,
         success: false,
-        error: errorData.error || `HTTP error! status: ${response.status}`,
       };
     }
 
@@ -77,8 +73,8 @@ export const logout = async (token: string): Promise<{ success: boolean; error?:
   } catch (error) {
     console.error("Error during logout:", error);
     return {
+      result: error instanceof Error ? error.message : "Unknown error occurred",
       success: false,
-      error: error instanceof Error ? error.message : "Unknown error occurred",
     };
   }
 };

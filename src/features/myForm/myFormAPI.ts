@@ -26,7 +26,7 @@ export const submitFormData = async (
       headers["Authorization"] = `${token}`;
     }
 
-    const response = await fetch("app/api/form", {
+    const response = await fetch("api/form", {
       method: "POST",
       headers,
       body: JSON.stringify({

@@ -15,7 +15,7 @@ export const fetchTableData = async (token?: string): Promise<ServerResponse> =>
       headers["Authorization"] = `${token}`;
     }
 
-    const response = await fetch("app/api/form", {
+    const response = await fetch("api/form", {
       method: "GET",
       headers,
     });

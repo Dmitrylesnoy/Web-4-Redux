@@ -16,7 +16,7 @@ export function LoginPage() {
 
   useEffect(() => {
     if (isAuthenticated) {
-      navigate("/main");
+      navigate("app/main");
     }
   }, [isAuthenticated, navigate]);
 
@@ -69,19 +69,11 @@ export function LoginPage() {
             />
           </div>
 
-          <button
-            type="submit"
-            className={styles.loginButton}
-            disabled={loading}
-          >
+          <button type="submit" className={styles.loginButton} disabled={loading}>
             {loading ? "Logging in..." : "Login"}
           </button>
 
-          {error && (
-            <div className={styles.error}>
-              {error}
-            </div>
-          )}
+          {error && <div className={styles.error}>{error}</div>}
         </form>
       </div>
     </div>
