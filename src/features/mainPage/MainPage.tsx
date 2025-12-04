@@ -16,7 +16,7 @@ export function MainPage() {
 
   useEffect(() => {
     if (!isAuthenticated) {
-      navigate("app/login");
+      navigate("/login");
     }
   }, [isAuthenticated, navigate]);
 
@@ -24,7 +24,7 @@ export function MainPage() {
     if (token) {
       dispatch(logoutRequest(token));
     }
-    navigate("app/login");
+    navigate("/login");
   };
 
   return (

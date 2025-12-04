@@ -7,16 +7,12 @@ import "./App.css";
 function App() {
   return (
     <Routes>
-      {/* Handle both root and app context paths */}
       <Route path="/login" element={<LoginPage />} />
-      <Route path="/app/login" element={<LoginPage />} />
+      {/* <Route path="/app/login" element={<LoginPage />} /> */}
       <Route path="/main" element={<MainPage />} />
-      <Route path="/app/main" element={<MainPage />} />
-      {/* Default redirects */}
-      <Route path="/" element={<Navigate to="/login" replace />} />
-      <Route path="/app" element={<Navigate to="/app/login" replace />} />
-      {/* Catch-all route for SPA - redirect to login */}
-      <Route path="*" element={<Navigate to="/login" replace />} />
+      {/* <Route path="/app/main" element={<MainPage />} /> */}
+
+      <Route path="/app" element={<Navigate to="/login" replace />} />
     </Routes>
   );
 }
