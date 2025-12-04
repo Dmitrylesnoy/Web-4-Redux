@@ -51,4 +51,5 @@ export const {
   fetchTableDataSuccess,
   fetchTableDataFailure,
 } = myTableSlice.actions;
+
 export default myTableSlice.reducer;
