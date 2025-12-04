@@ -9,7 +9,7 @@ export function MainPage() {
   const navigate = useNavigate();
 
   const handleNavigateToLogin = () => {
-    navigate("/login");
+    navigate("/");
   };
 
   return (

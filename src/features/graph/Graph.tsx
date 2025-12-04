@@ -36,12 +36,12 @@ export function Graph() {
 
   useEffect(() => {
     const canvas = canvasRef.current;
-    if (canvas && tableData.length > 0) {
+    if (canvas) {
       drawGraph(r);
       tableData.forEach((point: PointData) => {
         drawPoint(canvas, point.x, point.y, point.hit);
       });
-    }
+    } else console.log("Graph counld not be init");
   }, [tableData, r]);
 
   const drawGraph = (R: number | null) => {

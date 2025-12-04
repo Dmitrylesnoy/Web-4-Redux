@@ -14,7 +14,7 @@ export interface ServerResponse {
 
 export const submitFormData = async (formData: FormData, graphFlag: boolean): Promise<ServerResponse> => {
   try {
-    const response = await fetch("api/form", {
+    const response = await fetch("app/api/form", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

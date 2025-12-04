@@ -33,6 +33,7 @@ export function LoginPage() {
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               placeholder="Enter your username"
+              autoComplete="on"
               required
             />
           </div>
@@ -47,6 +48,7 @@ export function LoginPage() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Enter your password"
+              autoComplete="on"
               required
             />
           </div>

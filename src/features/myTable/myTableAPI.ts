@@ -7,7 +7,7 @@ export interface ServerResponse {
 
 export const fetchTableData = async (): Promise<ServerResponse> => {
   try {
-    const response = await fetch("api/form", { method: "GET" });
+    const response = await fetch("app/api/form", { method: "GET" });
     if (!response.ok) {
       const errorData = await response.json();
       return {
