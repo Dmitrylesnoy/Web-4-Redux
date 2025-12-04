@@ -5,9 +5,20 @@ export interface ServerResponse {
   error?: string;
 }
 
-export const fetchTableData = async (): Promise<ServerResponse> => {
+export const fetchTableData = async (token?: string): Promise<ServerResponse> => {
   try {
-    const response = await fetch("app/api/form", { method: "GET" });
+    const headers: Record<string, string> = {
+      "Content-Type": "application/json",
+    };
+
+    if (token) {
+      headers["Authorization"] = `${token}`;
+    }
+
+    const response = await fetch("app/api/form", {
+      method: "GET",
+      headers,
+    });
     if (!response.ok) {
       const errorData = await response.json();
       return {
