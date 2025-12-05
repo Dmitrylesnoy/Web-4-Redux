@@ -7,7 +7,7 @@ import { PointData } from "./../myTable/myTableSlice";
 
 const BASE_SIZE = 500;
 const MOBILE_SIZE = 350;
-const TABLET_SIZE = 450;
+// const TABLET_SIZE = 450;
 
 export function drawPoint(
   canvas: HTMLCanvasElement | null,
@@ -48,7 +48,7 @@ export function Graph() {
       if (window.innerWidth <= 886) {
         setCanvasSize(MOBILE_SIZE);
       } else if (window.innerWidth <= 1191) {
-        setCanvasSize(TABLET_SIZE);
+        setCanvasSize(MOBILE_SIZE);
       } else {
         setCanvasSize(BASE_SIZE);
       }
@@ -61,7 +61,7 @@ export function Graph() {
 
   const CENTER_X = canvasSize / 2;
   const CENTER_Y = canvasSize / 2;
-  const SCALE = canvasSize / 10;
+  const SCALE = canvasSize / 12;
 
   const drawGraph = (R: number | null) => {
     const canvas = canvasRef.current;

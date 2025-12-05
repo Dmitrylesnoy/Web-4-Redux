@@ -86,7 +86,6 @@
   background-color: rgba(138, 43, 226, 0.05);
 }
 
-/* Responsive design for MyForm */
 @media (max-width: 886px) {
   .formCoords input[type="text"],
   .formCoords select {

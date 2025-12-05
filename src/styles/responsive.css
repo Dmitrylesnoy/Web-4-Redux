@@ -38,7 +38,6 @@ body {
   gap: var(--spacing-md);
 }
 
-/* Tablet styles */
 @media (min-width: 887px) {
   body {
     font-size: var(--font-size-tablet);
@@ -62,7 +61,6 @@ body {
   }
 }
 
-/* Desktop styles */
 @media (min-width: 1192px) {
   body {
     font-size: var(--font-size-desktop);
@@ -86,7 +84,6 @@ body {
   }
 }
 
-/* Responsive utilities */
 .responsive-hidden {
   display: none;
 }
@@ -152,7 +149,6 @@ body {
   }
 }
 
-/* Header responsive design */
 @media (max-width: 886px) {
   .main-header {
     flex-direction: column;

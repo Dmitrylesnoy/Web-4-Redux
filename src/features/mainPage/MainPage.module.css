@@ -49,7 +49,6 @@
   background-color: var(--secondary);
 }
 
-/* Responsive styles for headers */
 @media (max-width: 886px) {
   .mainHeader {
     flex-direction: column;

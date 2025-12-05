@@ -104,7 +104,6 @@ input:focus {
   background-color: var(--secondary);
 }
 
-/* Responsive styles */
 @media (max-width: 886px) {
   .container {
     padding: var(--spacing-sm);
