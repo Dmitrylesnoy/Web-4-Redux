@@ -7,7 +7,6 @@ import { PointData } from "./../myTable/myTableSlice";
 
 const BASE_SIZE = 500;
 const MOBILE_SIZE = 350;
-// const TABLET_SIZE = 450;
 
 export function drawPoint(
   canvas: HTMLCanvasElement | null,
@@ -132,7 +131,7 @@ export function Graph() {
       ctx.fillStyle = "rgba(138,43,226,0.3)";
       ctx.strokeStyle = "#8a2be2";
       ctx.lineWidth = Math.max(1, (canvasSize / 500) * 2);
-      // TODO: new graph
+
       // Draw circle sector
       ctx.beginPath();
       ctx.arc(CENTER_X, CENTER_Y, radiusPx, -Math.PI, -Math.PI / 2, false);

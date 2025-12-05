@@ -1,8 +1,7 @@
 import { call, put, takeLatest, select } from "redux-saga/effects";
 import { submitFormData } from "./myFormAPI";
 import { submitFormRequest, submitFormSuccess, submitFormFailure } from "./myFormSlice";
-import { fetchTableData } from "../myTable/myTableAPI";
-import { setTableData } from "../myTable/myTableSlice";
+import { addTableData } from "../myTable/myTableSlice";
 
 function* submitFormSaga(action: ReturnType<typeof submitFormRequest>): Generator<any, void, any> {
   try {
@@ -14,10 +13,7 @@ function* submitFormSaga(action: ReturnType<typeof submitFormRequest>): Generato
       yield put(submitFormFailure(response.error));
     } else {
       yield put(submitFormSuccess(response));
-      const tableResponse = yield call(fetchTableData, token);
-      if (tableResponse.data) {
-        yield put(setTableData(tableResponse.data));
-      }
+      yield put(addTableData(response));
     }
   } catch (error) {
     yield put(submitFormFailure(error instanceof Error ? error.message : "Unknown error"));

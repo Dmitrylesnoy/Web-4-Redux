@@ -1,6 +1,7 @@
 import { call, put, takeLatest } from "redux-saga/effects";
 import { login, logout } from "./authAPI";
 import { loginRequest, loginSuccess, loginFailure, logoutRequest, logoutSuccess, logoutFailure } from "./authSlice";
+import { resetForm } from "../myForm/myFormSlice";
 
 function* loginSaga(action: ReturnType<typeof loginRequest>): Generator<any, void, any> {
   try {
@@ -20,6 +21,7 @@ function* logoutSaga(action: ReturnType<typeof logoutRequest>): Generator<any, v
     const response = yield call(logout, action.payload);
     if (response.success) {
       yield put(logoutSuccess());
+      yield put(resetForm());
     } else {
       yield put(logoutFailure(response.error || "Logout failed"));
     }

@@ -18,5 +18,4 @@ body {
   background-color: var(--bg);
   line-height: 1.5;
 }
-
 @import "./styles/responsive.css";

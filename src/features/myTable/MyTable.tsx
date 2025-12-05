@@ -13,7 +13,7 @@ export function MyTable() {
     dispatch(fetchTableDataRequest());
   }, [dispatch]);
 
-  if (tableData.length === 0) {
+  if (!tableData) {
     return <div>Loading data...</div>;
   }
   return (
