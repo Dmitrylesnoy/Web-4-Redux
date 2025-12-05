@@ -1,5 +1,7 @@
 .table {
-  margin-top: 20px;
+  margin-top: var(--spacing-lg);
+  width: 100%;
+  overflow-x: auto;
 }
 
 .tableData {
@@ -7,6 +9,7 @@
   border-collapse: collapse;
   background-color: white;
   box-shadow: var(--shadow);
+  min-width: 600px;
 }
 
 .tableData th {
@@ -14,11 +17,13 @@
   color: white;
   padding: 12px;
   text-align: left;
+  font-size: inherit;
 }
 
 .tableData td {
   padding: 10px;
   border-bottom: 1px solid var(--light-purple);
+  font-size: inherit;
 }
 
 .tableData tr:hover {
@@ -31,4 +36,61 @@
 
 .hitNo {
   background-color: lightcoral;
+}
+
+.tableContainer {
+  width: 100%;
+  overflow-x: auto;
+}
+
+/* Responsive styles for MyTable */
+@media (max-width: 886px) {
+  .table {
+    margin-top: var(--spacing-md);
+  }
+
+  .tableData {
+    font-size: var(--font-size-mobile);
+    min-width: 500px;
+  }
+
+  .tableData th,
+  .tableData td {
+    padding: 8px 6px;
+  }
+
+  .tableContainer {
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+  }
+}
+
+@media (min-width: 887px) and (max-width: 1191px) {
+  .tableData th,
+  .tableData td {
+    padding: 10px 8px;
+  }
+}
+
+.responsiveTable {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.responsiveTable table {
+  margin: 0;
+  min-width: 600px;
+}
+
+@media (max-width: 886px) {
+  .hideMobile {
+    display: none !important;
+  }
+}
+
+@media (min-width: 887px) {
+  .showMobileOnly {
+    display: none !important;
+  }
 }

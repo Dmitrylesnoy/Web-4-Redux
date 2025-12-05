@@ -9,6 +9,7 @@ body {
   align-items: center;
   min-height: 100vh;
   background: var(--light-bg);
+  padding: var(--spacing-md);
 }
 
 .content {
@@ -16,14 +17,15 @@ body {
   background-color: white;
   border-radius: 8px;
   box-shadow: var(--shadow);
-  padding: 40px;
+  padding: var(--spacing-xxl);
   max-width: 500px;
   width: 100%;
+  box-sizing: border-box;
 }
 
 .logo {
   vertical-align: middle;
-  margin: 20px;
+  margin: var(--spacing-lg);
   animation: spin 3s linear infinite;
   height: 80px;
 }
@@ -31,7 +33,7 @@ body {
 .title {
   color: var(--primary);
   text-align: center;
-  margin: 10px 0;
+  margin: var(--spacing-sm) 0;
   font-size: 2rem;
   font-weight: 600;
 }
@@ -39,13 +41,13 @@ body {
 .description {
   color: var(--text);
   text-align: center;
-  margin: 20px 0;
+  margin: var(--spacing-lg) 0;
 }
 
 .loginForm {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: var(--spacing-lg);
   margin-top: 30px;
 }
 
@@ -82,10 +84,10 @@ input:focus {
 }
 
 .loginButton {
-  margin: 5px;
+  margin: var(--spacing-xs);
   background-color: var(--primary);
   color: white;
-  padding: 10px 10px;
+  padding: 12px 20px;
   border: none;
   border-radius: var(--border-radius);
   cursor: pointer;
@@ -95,8 +97,48 @@ input:focus {
   min-width: 60px;
   display: inline-block;
   vertical-align: middle;
+  transition: background-color 0.3s ease;
 }
 
 .loginButton:hover {
   background-color: var(--secondary);
+}
+
+/* Responsive styles */
+@media (max-width: 886px) {
+  .container {
+    padding: var(--spacing-sm);
+  }
+
+  .content {
+    padding: var(--spacing-xl);
+  }
+
+  .title {
+    font-size: calc(var(--font-size-mobile) * 1.5);
+  }
+
+  .logo {
+    height: 60px;
+  }
+
+  .loginButton {
+    height: 50px;
+    font-size: var(--font-size-mobile);
+  }
+
+  input {
+    padding: 10px 12px;
+    font-size: var(--font-size-mobile);
+  }
+}
+
+@media (min-width: 887px) and (max-width: 1191px) {
+  .content {
+    padding: var(--spacing-xl);
+  }
+
+  .title {
+    font-size: calc(var(--font-size-tablet) * 1.2);
+  }
 }

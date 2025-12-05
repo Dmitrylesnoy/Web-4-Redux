@@ -1,22 +1,30 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../app/store";
 import { selectMyForm, submitFormRequest } from "../myForm/myFormSlice";
 import { useAppDispatch } from "../../app/hooks";
 import { PointData } from "./../myTable/myTableSlice";
 
-const CENTER_X = 250;
-const CENTER_Y = 250;
-const SCALE = 40;
+const BASE_SIZE = 500;
+const MOBILE_SIZE = 350;
+const TABLET_SIZE = 450;
 
-export function drawPoint(canvas: HTMLCanvasElement | null, x: number, y: number, hit: boolean) {
+export function drawPoint(
+  canvas: HTMLCanvasElement | null,
+  x: number,
+  y: number,
+  hit: boolean,
+  scale: number,
+  centerX: number,
+  centerY: number
+) {
   if (!canvas) return;
 
   const ctx = canvas.getContext("2d");
   if (!ctx) return;
 
-  const posX = CENTER_X + x * SCALE;
-  const posY = CENTER_Y - y * SCALE;
+  const posX = centerX + x * scale;
+  const posY = centerY - y * scale;
 
   ctx.fillStyle = hit ? "lime" : "lightcoral";
   ctx.strokeStyle = hit ? "green" : "red";
@@ -33,16 +41,27 @@ export function Graph() {
   const { r } = useSelector(selectMyForm);
   const tableData = useSelector((state: RootState) => state.myTable.data);
   const dispatch = useAppDispatch();
+  const [canvasSize, setCanvasSize] = useState(BASE_SIZE);
 
   useEffect(() => {
-    const canvas = canvasRef.current;
-    if (canvas) {
-      drawGraph(r);
-      tableData.forEach((point: PointData) => {
-        drawPoint(canvas, point.x, point.y, point.hit);
-      });
-    } else console.log("Graph counld not be init");
-  }, [tableData, r]);
+    const handleResize = () => {
+      if (window.innerWidth <= 886) {
+        setCanvasSize(MOBILE_SIZE);
+      } else if (window.innerWidth <= 1191) {
+        setCanvasSize(TABLET_SIZE);
+      } else {
+        setCanvasSize(BASE_SIZE);
+      }
+    };
+
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  const CENTER_X = canvasSize / 2;
+  const CENTER_Y = canvasSize / 2;
+  const SCALE = canvasSize / 10;
 
   const drawGraph = (R: number | null) => {
     const canvas = canvasRef.current;
@@ -51,8 +70,8 @@ export function Graph() {
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
-    const width = 500;
-    const height = 500;
+    const width = canvasSize;
+    const height = canvasSize;
 
     canvas.width = width;
     canvas.height = height;
@@ -60,28 +79,28 @@ export function Graph() {
     ctx.clearRect(0, 0, width, height);
 
     ctx.strokeStyle = "black";
-    ctx.lineWidth = 2;
-    ctx.font = "10px sans-serif";
+    ctx.lineWidth = Math.max(1, (canvasSize / 500) * 2);
+    ctx.font = `${Math.max(8, (canvasSize / 500) * 10)}px sans-serif`;
     ctx.textAlign = "center";
 
     // Draw axes
     ctx.beginPath();
-    ctx.moveTo(50, CENTER_Y);
-    ctx.lineTo(450, CENTER_Y);
-    ctx.moveTo(CENTER_X, 450);
-    ctx.lineTo(CENTER_X, 50);
+    ctx.moveTo(width * 0.1, CENTER_Y);
+    ctx.lineTo(width * 0.9, CENTER_Y);
+    ctx.moveTo(CENTER_X, height * 0.9);
+    ctx.lineTo(CENTER_X, height * 0.1);
     ctx.stroke();
 
     // Draw X ticks
     const xTicks = [-5, -4, -3, -2, -1, 1, 2, 3, 4, 5];
     xTicks.forEach((x) => {
       const posX = CENTER_X + x * SCALE;
-      if (posX >= 0 && posX <= width) {
+      if (posX >= width * 0.1 && posX <= width * 0.9) {
         ctx.beginPath();
         ctx.moveTo(posX, CENTER_Y - 5);
         ctx.lineTo(posX, CENTER_Y + 5);
         ctx.stroke();
-        ctx.fillText(x.toString(), posX, CENTER_Y + 20);
+        ctx.fillText(x.toString(), posX, CENTER_Y + Math.max(15, (canvasSize / 500) * 20));
       }
     });
 
@@ -90,25 +109,29 @@ export function Graph() {
     ctx.textAlign = "start";
     yTicks.forEach((y) => {
       const posY = CENTER_Y - y * SCALE;
-      if (posY >= 0 && posY <= height) {
+      if (posY >= height * 0.1 && posY <= height * 0.9) {
         ctx.beginPath();
         ctx.moveTo(CENTER_X - 5, posY);
         ctx.lineTo(CENTER_X + 5, posY);
         ctx.stroke();
-        ctx.fillText(y.toString(), CENTER_X + 10, posY + 5);
+        ctx.fillText(
+          y.toString(),
+          CENTER_X + Math.max(8, (canvasSize / 500) * 10),
+          posY + Math.max(3, (canvasSize / 500) * 5)
+        );
       }
     });
 
     // Draw axis labels
-    ctx.font = "12px sans-serif";
-    ctx.fillText("X", 440, CENTER_Y - 10);
-    ctx.fillText("Y", CENTER_X + 10, 40);
+    ctx.font = `${Math.max(10, (canvasSize / 500) * 12)}px sans-serif`;
+    ctx.fillText("X", width * 0.88, CENTER_Y - Math.max(8, (canvasSize / 500) * 10));
+    ctx.fillText("Y", CENTER_X + Math.max(8, (canvasSize / 500) * 10), height * 0.12);
 
     if (R && R > 0) {
       const radiusPx = R * SCALE;
       ctx.fillStyle = "rgba(138,43,226,0.3)";
       ctx.strokeStyle = "#8a2be2";
-      ctx.lineWidth = 2;
+      ctx.lineWidth = Math.max(1, (canvasSize / 500) * 2);
       // TODO: new graph
       // Draw circle sector
       ctx.beginPath();
@@ -137,6 +160,16 @@ export function Graph() {
     }
   };
 
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (canvas) {
+      drawGraph(r);
+      tableData.forEach((point: PointData) => {
+        drawPoint(canvas, point.x, point.y, point.hit, SCALE, CENTER_X, CENTER_Y);
+      });
+    } else console.log("Graph counld not be init");
+  }, [tableData, r, SCALE, CENTER_X, CENTER_Y]);
+
   const handleCanvasClick = (event: React.MouseEvent<HTMLCanvasElement>) => {
     if (!r || r <= 0) {
       alert("Please select R first (R cannot be zero)");
@@ -153,7 +186,6 @@ export function Graph() {
     const graphX = ((x - CENTER_X) / SCALE).toFixed(4);
     const graphY = ((CENTER_Y - y) / SCALE).toFixed(4);
 
-    // TODO sending request with grapth data
     const graphData = {
       x: +graphX,
       y: +graphY,
@@ -166,8 +198,20 @@ export function Graph() {
   };
 
   return (
-    <div className="card">
-      <canvas ref={canvasRef} width="500" height="500" onClick={handleCanvasClick} />
+    <div className="card" style={{ display: "flex", justifyContent: "center", padding: "20px" }}>
+      <canvas
+        ref={canvasRef}
+        width={canvasSize}
+        height={canvasSize}
+        onClick={handleCanvasClick}
+        style={{
+          maxWidth: "100%",
+          height: "auto",
+          cursor: r && r > 0 ? "crosshair" : "not-allowed",
+          border: "1px solid #ccc",
+          borderRadius: "8px",
+        }}
+      />
     </div>
   );
 }

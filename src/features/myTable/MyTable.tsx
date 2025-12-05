@@ -18,30 +18,36 @@ export function MyTable() {
   }
   return (
     <div className={styles.table}>
-      <table className={styles.tableData}>
-        <thead>
-          <tr>
-            <th>X</th>
-            <th>Y</th>
-            <th>R</th>
-            <th>Hit</th>
-            <th>Calc time</th>
-            <th>Current time</th>
-          </tr>
-        </thead>
-        <tbody>
-          {tableData.map((pointData: PointData, index: number) => (
-            <tr key={index} className={pointData.hit ? styles.hitYes : styles.hitNo}>
-              <td>{pointData.x}</td>
-              <td>{pointData.y}</td>
-              <td>{pointData.r}</td>
-              <td>{pointData.hit ? "Yes" : "No"}</td>
-              <td>{pointData.execTime} ns</td>
-              <td>{pointData.date}</td>
+      <div className={styles.responsiveTable}>
+        <table className={styles.tableData}>
+          <thead>
+            <tr>
+              <th className={styles.hideMobile}>X</th>
+              <th className={styles.hideMobile}>Y</th>
+              <th className={styles.hideMobile}>R</th>
+              <th>Hit</th>
+              <th className={styles.hideMobile}>Calc time</th>
+              <th className={styles.hideMobile}>Current time</th>
+              <th className={styles.showMobileOnly}>Point</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {tableData.map((pointData: PointData, index: number) => (
+              <tr key={index} className={pointData.hit ? styles.hitYes : styles.hitNo}>
+                <td className={styles.hideMobile}>{pointData.x}</td>
+                <td className={styles.hideMobile}>{pointData.y}</td>
+                <td className={styles.hideMobile}>{pointData.r}</td>
+                <td>{pointData.hit ? "Yes" : "No"}</td>
+                <td className={styles.hideMobile}>{pointData.execTime} ns</td>
+                <td className={styles.hideMobile}>{pointData.date}</td>
+                <td className={styles.showMobileOnly}>
+                  ({pointData.x}, {pointData.y}) R:{pointData.r}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 }

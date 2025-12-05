@@ -1,5 +1,5 @@
 .formCoords div {
-  margin-bottom: 15px;
+  margin-bottom: var(--spacing-md);
   text-align: left;
 }
 
@@ -26,7 +26,7 @@
 
 .radio label {
   display: inline-block;
-  margin-right: 10px;
+  margin-right: var(--spacing-sm);
   margin-bottom: 5px;
   font-weight: normal;
   vertical-align: middle;
@@ -38,7 +38,7 @@
 
 .formCoords > div {
   border-left: 3px solid var(--primary);
-  padding-left: 10px;
+  padding-left: var(--spacing-sm);
 }
 
 .requiredField::after {
@@ -53,7 +53,7 @@
 .errorMessage {
   color: red;
   font-size: 14px;
-  margin-top: 5px;
+  margin-top: var(--spacing-xs);
 }
 
 .foxPicture {
@@ -65,4 +65,58 @@
   vertical-align: middle;
   animation: spin 1s linear infinite;
   display: none;
+}
+
+.formContainer {
+  padding: var(--spacing-md);
+}
+
+.formCoords {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.coordsGroup,
+.radioGroup,
+.buttonGroup {
+  border: 1px solid var(--light-purple);
+  border-radius: var(--border-radius);
+  padding: var(--spacing-md);
+  background-color: rgba(138, 43, 226, 0.05);
+}
+
+/* Responsive design for MyForm */
+@media (max-width: 886px) {
+  .formCoords input[type="text"],
+  .formCoords select {
+    width: 100%;
+    max-width: 200px;
+  }
+
+  .formContainer {
+    padding: var(--spacing-sm);
+  }
+
+  .coordsGroup,
+  .radioGroup,
+  .buttonGroup {
+    padding: var(--spacing-sm);
+  }
+
+  .radio label {
+    display: block;
+    margin-right: 0;
+    margin-bottom: var(--spacing-xs);
+  }
+
+  .radio input[type="radio"] {
+    margin-right: var(--spacing-xs);
+  }
+}
+
+@media (min-width: 887px) and (max-width: 1191px) {
+  .formCoords {
+    gap: var(--spacing-md);
+  }
 }

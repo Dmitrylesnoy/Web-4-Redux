@@ -9,7 +9,6 @@ import { logoutRequest } from "../auth/authSlice";
 import styles from "./MainPage.module.css";
 
 export function MainPage() {
-  // TODO: resize front
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
   const { username, token, isAuthenticated } = useSelector((state: RootState) => state.auth);
@@ -42,11 +41,17 @@ export function MainPage() {
 
       <div className="main-container">
         <div className="main-row">
-          <MyForm />
-          <Graph />
+          <div className="card">
+            <MyForm />
+          </div>
+          <div className="card">
+            <Graph />
+          </div>
         </div>
         <div className="main-row">
-          <MyTable />
+          <div className="card table-responsive">
+            <MyTable />
+          </div>
         </div>
       </div>
     </div>

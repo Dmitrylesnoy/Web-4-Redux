@@ -28,9 +28,9 @@ header h2 {
   background-color: white;
   border-radius: 8px;
   box-shadow: var(--shadow);
-  display: table-cell;
-  vertical-align: top;
   padding: 20px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .submitButton,
@@ -53,16 +53,6 @@ button {
 .submitButton:hover,
 button:hover {
   background-color: var(--secondary);
-}
-
-.main-container {
-  display: table;
-  border-collapse: separate;
-  border-spacing: 20px;
-}
-
-.main-row {
-  display: table-row;
 }
 
 #custom-bar {

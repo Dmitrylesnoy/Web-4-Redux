@@ -12,8 +12,11 @@
 body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans",
     "Droid Sans", "Helvetica Neue", sans-serif;
-  font-size: 24px;
+  font-size: var(--font-size-base);
   color: var(--text);
-  padding: 20px;
+  padding: var(--spacing-lg);
   background-color: var(--bg);
+  line-height: 1.5;
 }
+
+@import "./styles/responsive.css";
