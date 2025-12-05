@@ -23,7 +23,7 @@ export const submitFormData = async (
     };
 
     if (token) {
-      headers["Authorization"] = `${token}`;
+      headers["AuthToken"] = `${token}`;
     }
 
     const response = await fetch("app/api/form", {

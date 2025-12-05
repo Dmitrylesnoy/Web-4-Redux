@@ -12,7 +12,7 @@ export const fetchTableData = async (token?: string): Promise<ServerResponse> =>
     };
 
     if (token) {
-      headers["Authorization"] = `${token}`;
+      headers["AuthToken"] = `${token}`;
     }
 
     const response = await fetch("app/api/form", {
