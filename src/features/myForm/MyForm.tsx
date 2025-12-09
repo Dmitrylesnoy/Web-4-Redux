@@ -12,7 +12,6 @@ import {
   submitFormRequest,
 } from "./myFormSlice";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import { fetchTableDataRequest } from "../myTable/myTableSlice";
 
 export function MyForm() {
   const dispatch = useAppDispatch();
@@ -25,7 +24,6 @@ export function MyForm() {
     dispatch(validateR());
     if (!xError && !yError && !rError && x !== null && y !== null && r !== null) {
       dispatch(submitFormRequest({ x, y, r, graphFlag: false }));
-      dispatch(fetchTableDataRequest());
     }
   };
 

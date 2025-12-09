@@ -180,12 +180,5 @@ button:hover {
 
 #custom-bar {
   vertical-align: middle;
-  animation: spin 1s linear infinite;
   display: none;
-}
-
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
 }

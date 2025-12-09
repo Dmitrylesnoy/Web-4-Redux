@@ -12,11 +12,7 @@ export interface ServerResponse {
   error?: string;
 }
 
-export const submitFormData = async (
-  formData: FormData,
-  graphFlag: boolean,
-  token?: string
-): Promise<ServerResponse> => {
+export const submitFormData = async (formData: FormData, token?: string): Promise<ServerResponse> => {
   try {
     const headers: Record<string, string> = {
       "Content-Type": "application/json",
@@ -29,12 +25,7 @@ export const submitFormData = async (
     const response = await fetch("app/api/form", {
       method: "POST",
       headers,
-      body: JSON.stringify({
-        x: formData.x,
-        y: formData.y,
-        r: formData.r,
-        graph: graphFlag,
-      }),
+      body: JSON.stringify(formData),
     });
 
     if (!response.ok) {

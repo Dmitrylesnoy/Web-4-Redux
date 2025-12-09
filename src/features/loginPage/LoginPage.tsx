@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import styles from "./LoginPage.module.css";
-import logo from "../../logo.svg";
 import { RootState, AppDispatch } from "../../app/store";
 import { loginRequest, AuthCredentials } from "../auth/authSlice";
 
@@ -25,7 +24,7 @@ export function LoginPage() {
 
     const credentials: AuthCredentials = {
       username: username.trim(),
-      password,
+      password: password.trim(),
     };
 
     dispatch(loginRequest(credentials));
@@ -34,7 +33,7 @@ export function LoginPage() {
   return (
     <div className={styles.container}>
       <div className={styles.content}>
-        <img src={logo} className={styles.logo} alt="Logo" />
+        {/* <img src={logo} className={styles.logo} alt="Logo" /> */}
         <h1 className={styles.title}>Welcome to Web Lab 4</h1>
         <p className={styles.description}>Please login to continue</p>
 

@@ -1,9 +1,8 @@
-import CryptoJS from "crypto-js";
 import { AuthCredentials } from "./authSlice";
 
 export interface LoginRequest {
   username: string;
-  hashedPassword: string;
+  password: string;
 }
 
 export interface LogoutRequest {
@@ -17,8 +16,6 @@ export interface AuthResponse {
 
 export const login = async (credentials: AuthCredentials): Promise<AuthResponse> => {
   try {
-    const hashedPassword = CryptoJS.MD5(credentials.password).toString();
-
     const response = await fetch("app/api/user/login", {
       method: "POST",
       headers: {
@@ -26,7 +23,7 @@ export const login = async (credentials: AuthCredentials): Promise<AuthResponse>
       },
       body: JSON.stringify({
         username: credentials.username,
-        hashedPassword: hashedPassword,
+        password: credentials.password,
       }),
     });
 

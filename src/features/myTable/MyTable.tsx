@@ -9,9 +9,11 @@ export function MyTable() {
   const tableData = useSelector((state: RootState) => state.myTable.data);
   const dispatch = useAppDispatch();
 
+  const auth = useSelector((state: RootState) => state.auth.isAuthenticated);
+
   useEffect(() => {
-    dispatch(fetchTableDataRequest());
-  }, [dispatch]);
+    if (auth) dispatch(fetchTableDataRequest());
+  }, [dispatch, auth]);
 
   if (!tableData) {
     return <div>Loading data...</div>;

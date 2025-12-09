@@ -57,17 +57,10 @@ button:hover {
 
 #custom-bar {
   vertical-align: middle;
-  animation: spin 1s linear infinite;
   display: none;
 }
 
 #fox_picture {
   vertical-align: middle;
   margin: 50px 50px;
-}
-
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
 }

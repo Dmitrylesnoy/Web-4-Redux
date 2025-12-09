@@ -26,7 +26,7 @@ const myTableSlice = createSlice({
       state.data = action.payload;
     },
     addTableData: (state, action: PayloadAction<PointData>) => {
-      state.data.push(action.payload);
+      state.data.unshift(action.payload);
     },
     clearTableData: (state) => {
       state.data = [];
