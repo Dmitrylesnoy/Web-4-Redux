@@ -16,7 +16,7 @@ export interface AuthResponse {
 
 export const login = async (credentials: AuthCredentials): Promise<AuthResponse> => {
   try {
-    const response = await fetch("app/api/user/login", {
+    const response = await fetch("api/user/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -51,7 +51,7 @@ export const login = async (credentials: AuthCredentials): Promise<AuthResponse>
 
 export const logout = async (token: string): Promise<{ result?: string; success: boolean }> => {
   try {
-    const response = await fetch("app/api/user/logout", {
+    const response = await fetch("api/user/logout", {
       method: "GET",
       headers: {
         AuthToken: `${token}`,

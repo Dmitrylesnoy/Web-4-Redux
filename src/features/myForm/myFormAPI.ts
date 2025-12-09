@@ -22,7 +22,7 @@ export const submitFormData = async (formData: FormData, token?: string): Promis
       headers["AuthToken"] = `${token}`;
     }
 
-    const response = await fetch("app/api/form", {
+    const response = await fetch("api/form", {
       method: "POST",
       headers,
       body: JSON.stringify(formData),
