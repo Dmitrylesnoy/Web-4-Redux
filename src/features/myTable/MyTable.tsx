@@ -41,7 +41,7 @@ export function MyTable() {
                 <td className={styles.hideMobile}>{pointData.r}</td>
                 <td>{pointData.hit ? "Yes" : "No"}</td>
                 <td className={styles.hideMobile}>{pointData.execTime} ns</td>
-                <td className={styles.hideMobile}>{pointData.date}</td>
+                <td className={styles.hideMobile}>{pointData.dateFormatted}</td>
                 <td className={styles.showMobileOnly}>
                   ({pointData.x}, {pointData.y}) R:{pointData.r}
                 </td>

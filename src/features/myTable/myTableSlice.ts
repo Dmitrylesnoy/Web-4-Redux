@@ -6,16 +6,16 @@ export interface PointData {
   r: number;
   hit: boolean;
   execTime: number;
-  date: string;
+  dateFormatted: string;
 }
 
 export interface MyTableState {
-  data: PointData[];
+  data?: PointData[];
   error?: string;
 }
 
 const initialState: MyTableState = {
-  data: [],
+  data: undefined,
 };
 
 const myTableSlice = createSlice({
@@ -26,7 +26,11 @@ const myTableSlice = createSlice({
       state.data = action.payload;
     },
     addTableData: (state, action: PayloadAction<PointData>) => {
-      state.data.unshift(action.payload);
+      if (state.data) {
+        state.data.unshift(action.payload);
+      } else {
+        state.data = [action.payload];
+      }
     },
     clearTableData: (state) => {
       state.data = [];

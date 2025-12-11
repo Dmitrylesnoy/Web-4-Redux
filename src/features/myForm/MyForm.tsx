@@ -15,7 +15,7 @@ import { useAppDispatch, useAppSelector } from "../../app/hooks";
 
 export function MyForm() {
   const dispatch = useAppDispatch();
-  const { x, y, r, xError, yError, rError } = useAppSelector(selectMyForm);
+  const { x, y, r, xError, yError, rError, formError } = useAppSelector(selectMyForm);
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
@@ -96,6 +96,7 @@ export function MyForm() {
             Reset
           </button>
         </div>
+        {formError && <div className={styles.errorMessage}>{formError}</div>}
       </form>
     </div>
   );

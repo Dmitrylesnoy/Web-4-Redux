@@ -163,9 +163,13 @@ export function Graph() {
     const canvas = canvasRef.current;
     if (canvas) {
       drawGraph(r);
-      tableData.forEach((point: PointData) => {
-        drawPoint(canvas, point.x, point.y, point.hit, SCALE, CENTER_X, CENTER_Y);
-      });
+      if (tableData == null) {
+        console.log("table data is null/undefined");
+      } else {
+        tableData.forEach((point: PointData) => {
+          drawPoint(canvas, point.x, point.y, point.hit, SCALE, CENTER_X, CENTER_Y);
+        });
+      }
     } else console.log("Graph counld not be init");
   }, [tableData, r, SCALE, CENTER_X, CENTER_Y]);
 

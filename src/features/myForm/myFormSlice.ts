@@ -9,6 +9,7 @@ export interface MyFormState {
   xError: string;
   yError: string;
   rError: string;
+  formError: string;
 }
 
 const initialState: MyFormState = {
@@ -18,6 +19,7 @@ const initialState: MyFormState = {
   xError: "",
   yError: "",
   rError: "",
+  formError: "",
 };
 
 export const myFormSlice = createSlice({
@@ -66,9 +68,15 @@ export const myFormSlice = createSlice({
     resetForm: (state) => {
       return { ...initialState };
     },
-    submitFormRequest: (state, action: PayloadAction<FormData>) => {},
-    submitFormSuccess: (state, action: PayloadAction<ServerResponse>) => {},
-    submitFormFailure: (state, action: PayloadAction<string>) => {},
+    submitFormRequest: (state, action: PayloadAction<FormData>) => {
+      state.formError = "";
+    },
+    submitFormSuccess: (state, action: PayloadAction<ServerResponse>) => {
+      state.formError = "";
+    },
+    submitFormFailure: (state, action: PayloadAction<string>) => {
+      state.formError = action.payload;
+    },
   },
 });
 
