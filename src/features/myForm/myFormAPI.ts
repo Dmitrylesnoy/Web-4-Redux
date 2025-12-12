@@ -19,7 +19,7 @@ export const submitFormData = async (formData: FormData, token?: string): Promis
     };
 
     if (token) {
-      headers["AuthToken"] = `${token}`;
+      headers["Authorization"] = `Bearer ${token}`;
     }
 
     const response = await fetch("api/form", {

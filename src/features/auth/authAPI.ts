@@ -54,7 +54,7 @@ export const logout = async (token: string): Promise<{ result?: string; success:
     const response = await fetch("api/user/logout", {
       method: "GET",
       headers: {
-        AuthToken: `${token}`,
+        "Authorization": `Bearer ${token}`,
       },
     });
 
