@@ -59,6 +59,10 @@ body {
   .main-row:nth-child(2) {
     grid-template-columns: 1fr;
   }
+
+  .logo {
+    height: 60px;
+  }
 }
 
 @media (min-width: 1192px) {

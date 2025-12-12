@@ -2,11 +2,20 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import { MainPage } from "./features/mainPage/MainPage";
 import { LoginPage } from "./features/LoginPage/LoginPage";
 import "./App.css";
+import logo from "./logo.svg";
 import { useSelector } from "react-redux";
 import { RootState } from "./app/store";
 
 function App() {
-  const { isAuthenticated } = useSelector((state: RootState) => state.auth);
+  const { isAuthenticated, loading } = useSelector((state: RootState) => state.auth);
+
+  if (loading && isAuthenticated) {
+    return (
+      <div className="loading">
+        <img src={logo} className="logo" alt="Logo" />
+      </div>
+    );
+  }
 
   return (
     <Routes>

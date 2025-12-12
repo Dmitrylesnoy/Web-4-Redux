@@ -51,11 +51,14 @@ export const login = async (credentials: AuthCredentials): Promise<AuthResponse>
 
 export const logout = async (token: string): Promise<{ result?: string; success: boolean }> => {
   try {
+    const headers: Record<string, string> = {
+      "Content-Type": "application/json",
+    };
+    headers["Authorization"] = `Bearer ${token}`;
+
     const response = await fetch("api/user/logout", {
       method: "GET",
-      headers: {
-        "Authorization": `Bearer ${token}`,
-      },
+      headers,
     });
 
     if (!response.ok) {

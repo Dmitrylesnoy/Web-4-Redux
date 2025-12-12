@@ -66,6 +66,25 @@ button:hover {
   margin: 50px 50px;
 }
 
+.loading {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+}
+
+.logo {
+  vertical-align: middle;
+  margin: var(--spacing-lg);
+  animation: spin 3s linear infinite;
+  height: 80px;
+}
+
 @keyframes spin {
   to {
     transform: rotate(360deg);
