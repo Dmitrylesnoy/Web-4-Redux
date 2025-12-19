@@ -5,7 +5,7 @@ import myTableReducer from "../features/myTable/myTableSlice";
 import rootSaga from "./rootSaga";
 import authSliceReducer from "../features/auth/authSlice";
 import storage from "redux-persist/lib/storage";
-import { persistReducer, persistStore } from "redux-persist";
+import { persistReducer, persistStore, createTransform } from "redux-persist";
 
 const rootReducer = combineReducers({
   auth: authSliceReducer,
@@ -16,7 +16,7 @@ const rootReducer = combineReducers({
 const persistConfig = {
   key: "root",
   storage,
-  whitelist: ["auth"],
+  whitelist: ["auth", "myForm"],
 };
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 

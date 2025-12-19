@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../../app/store";
 import { FormData, ServerResponse } from "./myFormAPI";
+import { REHYDRATE } from "redux-persist";
 
 export interface MyFormState {
   x: number | null;
@@ -77,6 +78,13 @@ export const myFormSlice = createSlice({
     submitFormFailure: (state, action: PayloadAction<string>) => {
       state.formError = action.payload;
     },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(REHYDRATE, (state, action: any) => {
+      if (!action.payload?.auth?.isAuthenticated) {
+        return { ...initialState };
+      }
+    });
   },
 });
 
