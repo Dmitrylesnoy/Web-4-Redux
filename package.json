@@ -22,13 +22,14 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "build-and-copy": "npm run build && npm run copy-to-backend",
-    "copy-to-backend": "xcopy /E /I /Y build \"..\\Web-4-jakarta\\src\\main\\webapp\""
+    "copy-to-backend": "xcopy /E /I /Y build \"..\\Web-4-JakartaEE\\src\\main\\webapp\""
   },
   "eslintConfig": {
     "extends": [
       "react-app",
       "react-app/jest"
-    ]
+    ],
+    "plugins": ["react"]
   },
   "browserslist": {
     "production": [
