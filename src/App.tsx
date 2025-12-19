@@ -1,6 +1,6 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import { MainPage } from "./features/mainPage/MainPage";
-import { LoginPage } from "./features/LoginPage/LoginPage";
+import { LoginPage } from "./features/loginPage/LoginPage";
 import "./App.css";
 import logo from "./logo.svg";
 import { useSelector } from "react-redux";
